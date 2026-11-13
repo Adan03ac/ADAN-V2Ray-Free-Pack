@@ -1,0 +1,7 @@
+# Direct subscription feeds
+https://raw.githubusercontent.com/EEvanescence/4Diana/main/AllConfigsSub.txt
+https://raw.githubusercontent.com/Hidashimora/free-vpn-anti-rkn/main/configs/1.1.txt
+https://raw.githubusercontent.com/barry-far/V2ray-config/main/All_Configs_base64_Sub.txt
+# Discovery-only pages:
+# https://hidashimora.github.io/free-vpn-anti-rkn/
+# https://smbcryp.github.io/V2V/
