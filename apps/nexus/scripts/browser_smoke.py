@@ -37,7 +37,12 @@ def main():
         page.wait_for_selector("main", timeout=30000)
         page.wait_for_timeout(1000)
         width = page.evaluate("({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth})")
-        assert width["scroll"] <= width["client"] + 1, width
+        if width["scroll"] > width["client"] + 1:
+            overflow = page.evaluate("""() => [...document.querySelectorAll('main *')]
+                .filter(el => el.getBoundingClientRect().right > document.documentElement.clientWidth + 1)
+                .slice(0, 12).map(el => ({tag: el.tagName, class: el.className.baseVal ?? el.className,
+                    right: Math.round(el.getBoundingClientRect().right)}))""")
+            raise AssertionError({"width": width, "overflow": overflow})
         browser.close()
     print(json.dumps({"status": "passed", "desktop_login": True, "configurations_visible": True, "httponly_cookie": True, "mobile_width": width}))
 

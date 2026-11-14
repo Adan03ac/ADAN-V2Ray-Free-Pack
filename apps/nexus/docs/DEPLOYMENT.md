@@ -1,6 +1,6 @@
 # Deployment and recovery — stabilization build
 
-This build is locally tested. Docker/PostgreSQL/Redis integration is not yet executed. Follow `AUDIT-fa.md` for release gates. Do not treat these instructions as evidence that a public deployment was tested.
+The repository integration now runs a disposable Docker/PostgreSQL/Redis stack in `Nexus verification`. Check the current commit's CI results for the tested scope. Public deployment and production recovery drills remain separate release gates; see the historical audit and current integration guide.
 
 ## Local Docker setup
 

@@ -43,7 +43,7 @@ export function Section({
   padded?: boolean;
 }) {
   return (
-    <section className={cn("card-surface flex flex-col", className)}>
+    <section className={cn("card-surface flex min-w-0 flex-col", className)}>
       <header className="flex items-start justify-between gap-3 px-5 pb-3 pt-5">
         <div className="min-w-0">
           <h2 className="text-sm font-medium text-chalk-100">{title}</h2>
@@ -51,7 +51,7 @@ export function Section({
         </div>
         {action}
       </header>
-      <div className={cn("flex-1", padded ? "px-5 pb-5" : "px-0 pb-0")}>{children}</div>
+      <div className={cn("min-w-0 flex-1", padded ? "px-5 pb-5" : "px-0 pb-0")}>{children}</div>
     </section>
   );
 }
