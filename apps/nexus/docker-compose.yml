@@ -82,6 +82,12 @@ services:
       context: ./backend
     restart: unless-stopped
     command: ["python", "-m", "app.workers.worker"]
+    healthcheck:
+      test: ["CMD", "python", "-m", "app.workers.healthcheck"]
+      interval: 10s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
     env_file: .env
     environment:
       ENVIRONMENT: production
@@ -93,6 +99,7 @@ services:
       INGESTION_UPSTREAM_ONLY: ${INGESTION_UPSTREAM_ONLY:-true}
       PUBLISH_DIR: /app/data/published
       PIPELINE_LOCK_PATH: /app/data/pipeline.lock
+      WORKER_HEARTBEAT_PATH: /app/data/worker.heartbeat
     volumes:
       - appdata:/app/data
     depends_on:

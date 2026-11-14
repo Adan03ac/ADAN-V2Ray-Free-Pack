@@ -15,6 +15,7 @@ from app.core.db import engine
 from app.core.logging import configure_logging
 from app.models import Base
 from app.workers.scheduler import scheduler
+from app.workers.healthcheck import write_heartbeat
 
 logger = logging.getLogger("nexus.worker")
 
@@ -40,6 +41,7 @@ def main() -> None:
     signal.signal(signal.SIGTERM, _handle)
     signal.signal(signal.SIGINT, _handle)
     while not stop:
+        write_heartbeat(settings.worker_heartbeat_path, scheduler.is_running())
         time.sleep(2)
     scheduler.stop()
     logger.info("worker stopped")

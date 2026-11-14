@@ -73,6 +73,7 @@ class Settings(BaseSettings):
     fetch_user_agent: str = "ADAN-NEXUS-CONNECT/1.0 (+connectivity-intelligence)"
     allow_private_source_hosts: bool = False
     pipeline_lock_path: str = str(PROJECT_DIR / "data" / "pipeline.lock")
+    worker_heartbeat_path: str = str(PROJECT_DIR / "data" / "worker.heartbeat")
 
     # --- publication -------------------------------------------------------
     publish_mode: str = "local"  # local | github (github provider is not implemented)
