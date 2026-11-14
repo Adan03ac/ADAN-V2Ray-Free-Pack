@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   backend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     defaults:
       run:
@@ -36,7 +36,7 @@ jobs:
           name: nexus-test-results
           path: apps/nexus/backend/pytest.xml
   frontend:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     defaults:
       run:
@@ -53,7 +53,7 @@ jobs:
         env:
           NEXT_TELEMETRY_DISABLED: '1'
   docker-integration:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     defaults:
       run:
