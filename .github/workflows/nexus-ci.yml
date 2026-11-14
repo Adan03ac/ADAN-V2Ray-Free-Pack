@@ -1,0 +1,86 @@
+name: Nexus verification
+on:
+  pull_request:
+    paths: ['apps/nexus/**', '.github/workflows/nexus-ci.yml']
+  push:
+    branches: [main]
+    paths: ['apps/nexus/**', '.github/workflows/nexus-ci.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nexus-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: apps/nexus/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python -m pytest tests -q --junitxml=pytest.xml
+      - run: alembic upgrade head && alembic check
+        env:
+          DATABASE_URL: sqlite:////tmp/nexus-ci.db
+          DATABASE_AUTO_CREATE: 'false'
+          SECRET_KEY: ci-only-migration-key-01234567890123456789
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nexus-test-results
+          path: apps/nexus/backend/pytest.xml
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: apps/nexus/frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: apps/nexus/frontend/package-lock.json
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run typecheck && npm run build && npm audit --audit-level=high
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+  docker-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: apps/nexus
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/prepare_ci_environment.py
+      - run: docker compose config --quiet
+      - run: docker compose up -d --build --wait --wait-timeout 180
+      - name: Import repository snapshot without network probes
+        run: |
+          container_id=$(docker compose ps -q backend)
+          docker cp ../../subscription.txt "$container_id:/tmp/repository-bank.txt"
+          docker compose exec -T backend python -m scripts.import_repository_bank --bank /tmp/repository-bank.txt
+      - run: python scripts/smoke_local.py --config data/ci-environment.json
+      - name: Install browser test dependencies
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install chromium
+      - name: Verify desktop login and mobile layout
+        run: python scripts/browser_smoke.py --config data/ci-environment.json
+      - name: Service status
+        if: always()
+        run: docker compose ps -a
+      - name: Clean up disposable CI stack
+        if: always()
+        run: docker compose down
