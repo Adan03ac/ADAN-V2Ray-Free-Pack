@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #080a0b;
+  --panel: #111416;
+  --card: #171b1d;
+  --neon: #9dff00;
+  --violet: #8b5cf6;
+  --text: #f3f5f4;
+  --muted: #919b98;
+}
+
+* {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+html {
+  color-scheme: dark;
+  scrollbar-color: #28302f transparent;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-feature-settings: "ss01" 1, "cv01" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(900px 480px at 82% -12%, rgba(139, 92, 246, 0.12), transparent 70%),
+    radial-gradient(760px 420px at 4% 0%, rgba(157, 255, 0, 0.06), transparent 72%),
+    radial-gradient(600px 600px at 50% 120%, rgba(139, 92, 246, 0.05), transparent 70%);
+}
+
+::selection {
+  background: rgba(157, 255, 0, 0.22);
+  color: #f3f5f4;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #232a2a;
+  border-radius: 999px;
+  border: 2px solid #080a0b;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2f3937;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid rgba(157, 255, 0, 0.75);
+    outline-offset: 2px;
+  }
+  [dir="rtl"] {
+    font-family: var(--font-fa), var(--font-sans), sans-serif;
+    letter-spacing: 0;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-3xl border border-white/[0.06] bg-ink-850 shadow-panel;
+  }
+  .card-surface {
+    @apply rounded-3xl border border-white/[0.05] bg-ink-800;
+  }
+  .hairline {
+    @apply border-white/[0.06];
+  }
+  .label-caps {
+    @apply text-[10px] font-medium uppercase tracking-[0.16em] text-chalk-500;
+  }
+  .mono {
+    @apply font-mono tabular-nums;
+  }
+  .neon-text {
+    color: var(--neon);
+  }
+  .skeleton {
+    @apply relative overflow-hidden rounded-lg bg-white/[0.04];
+  }
+  .skeleton::after {
+    content: "";
+    @apply absolute inset-0 -translate-x-full animate-shimmer;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  }
+  .table-row-hover {
+    @apply transition-colors hover:bg-white/[0.025];
+  }
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950;
+  }
+}

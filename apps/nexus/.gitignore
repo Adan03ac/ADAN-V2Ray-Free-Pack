@@ -1,0 +1,33 @@
+# Secrets and local state
+.env
+.env.local
+.env.*.local
+backend/.env
+backend/.venv/
+backend/**/__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Data (generated)
+data/
+!data/.gitkeep
+
+# Frontend
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+*.tsbuildinfo
+next-env.d.ts
+
+# Logs / OS
+*.log
+.DS_Store
+
+.venv/
+evidence/
+
+/frontend/node_modules
