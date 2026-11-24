@@ -1,12 +1,12 @@
 {
-  "updated_at_utc": "2026-11-24T00:47:17.156655+00:00",
-  "total": 10532,
+  "updated_at_utc": "2026-11-24T10:52:19.906364+00:00",
+  "total": 10540,
   "sources": [
     {
       "source": "https://raw.githubusercontent.com/EEvanescence/4Diana/main/AllConfigsSub.txt",
       "status": "ok",
-      "parsed": 1174,
-      "added": 1174
+      "parsed": 1179,
+      "added": 1179
     },
     {
       "source": "https://raw.githubusercontent.com/Hidashimora/free-vpn-anti-rkn/main/configs/1.1.txt",
@@ -17,8 +17,8 @@
     {
       "source": "https://raw.githubusercontent.com/barry-far/V2ray-config/main/All_Configs_Sub.txt",
       "status": "ok",
-      "parsed": 9058,
-      "added": 9058
+      "parsed": 9061,
+      "added": 9061
     }
   ],
   "warning": null
