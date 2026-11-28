@@ -1,6 +1,6 @@
 {
-  "updated_at_utc": "2026-11-27T21:11:35.252078+00:00",
-  "total": 13889,
+  "updated_at_utc": "2026-11-28T03:51:40.616117+00:00",
+  "total": 13756,
   "sources": [
     {
       "source": "https://raw.githubusercontent.com/EEvanescence/4Diana/main/AllConfigsSub.txt",
@@ -17,8 +17,8 @@
     {
       "source": "https://raw.githubusercontent.com/barry-far/V2ray-config/main/All_Configs_Sub.txt",
       "status": "ok",
-      "parsed": 9005,
-      "added": 9005
+      "parsed": 8872,
+      "added": 8872
     }
   ],
   "warning": null
